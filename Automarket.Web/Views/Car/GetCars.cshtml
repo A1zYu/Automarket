@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Automarket.Domain.Models.Car>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@foreach (var item in Model)
+{
+    <p>@item.Id</p>
+    <p>@item.Name</p>
+    <p>@item.Model</p>
+    <p>@item.Price</p>
+    <p>@item.Description</p>
+    <p>@item.DateCreate</p>
+    <p>@item.Speed</p>
+    <p>@item.TypeCar</p>
+                  
+}

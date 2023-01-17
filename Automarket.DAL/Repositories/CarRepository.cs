@@ -36,6 +36,13 @@ public class CarRepository : ICarRepository
        return true;
     }
 
+    public async Task<Car> Update(Car entity)
+    {
+        _context.Cars.Update(entity);
+        await _context.SaveChangesAsync();
+        return entity;
+    }
+
     public async Task<Car> GetByName(string name)
     {
         return await _context.Cars.FirstOrDefaultAsync(x => x.Name == name);

@@ -150,4 +150,40 @@ public class CarService : ICarService
             };
         }
     }
+
+    public async Task<IBaseResponse<Car>> Edit(int id, CarViewModel model)
+    {
+        var baseResponse = new BaseResponse<Car>();
+        try
+        {
+            var car =await _carRepository.Get(id);
+            if (car==null)
+            {
+                baseResponse.StatusCode = StatusCode.CarNotFound;
+                baseResponse.Description = "Car not found";
+                return baseResponse;
+            }
+
+            car.Description = model.Description;
+            car.Name = model.Name;
+            car.Model = model.Model;
+            car.Speed = model.Speed;
+            car.Price = model.Price;
+            car.DateCreate = model.DateCreate;
+
+            //TypeCar
+            //car.TypeCar = (TypeCar)Convert.ToInt32(model.TypeCar);
+            await _carRepository.Update(car);
+
+            return baseResponse;
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponse<Car>()
+            {
+                Description = $"[Edit]: {ex.Message}",
+                StatusCode = StatusCode.InternalServerError
+            };
+        }
+    }
 }
